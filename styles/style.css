@@ -1,0 +1,82 @@
+@charset "utf-8";
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #E5E5E5;
+	font-family: 'Open Sans', sans-serif;
+}
+#content {
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+header {
+    text-align: center;
+}
+header h1 {
+    font-size: 4em;
+    margin: 0px;
+    font-weight: normal;
+}
+#feed {
+    position: fixed;
+    padding: 0px;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: fit-content;
+    max-width: 250px;
+    border: 0px;
+    border-left: 1px solid #A3A3A3;
+    background-color: #FFF;
+    overflow: auto;
+    box-shadow: -2px 5px 10px #999;
+}
+#feedTitle {
+    font-size: 2em;
+    width: auto;
+    text-align: center;
+    padding: 10px;
+    border: 0px;
+    border-bottom: 1px solid #A3A3A3;
+}
+
+.module {
+    width: 600px;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: #FFF;
+    box-shadow: 3px 3px 5px #999;
+}
+.moduleTitle {
+    position: absolute;
+    transform: translateX(-100%);
+    width: fit-content;
+    padding-right: 10px;
+    text-align: right;
+    font-size: 1.5em;
+} 
+.moduleUtils {
+    text-align: right;
+    padding-right: 15px;
+    font-weight: bold;
+}
+
+#map {
+    padding: 0;
+    height: 400px;
+}
+#sensors {
+    padding: 0;
+    height: 200px;
+}
+#reminders {
+    padding: 0;
+    height: 400px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.7em;
+}
