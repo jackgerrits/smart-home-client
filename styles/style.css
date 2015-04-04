@@ -24,7 +24,7 @@ header h1 {
     top: 0px;
     right: 0px;
     height: 100%;
-    width: fit-content;
+    width: 250px;
     max-width: 250px;
     border: 0px;
     border-left: 1px solid #A3A3A3;
@@ -44,9 +44,11 @@ header h1 {
 .module {
     width: 600px;
     padding: 5px;
+    min-height: 300px;
     margin-top: 10px;
     background-color: #FFF;
     box-shadow: 3px 3px 5px #999;
+    overflow: auto;
 }
 .moduleTitle {
     position: absolute;
@@ -61,6 +63,19 @@ header h1 {
     padding-right: 15px;
     font-weight: bold;
 }
+.chartContainer {
+    float: left;
+    width: 250px;
+    background-color: #EEE;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 15px;
+}
+.chartTitle {
+    font-size: 2em;
+    text-align: center;
+
+}
 
 #map {
     padding: 0;
@@ -68,7 +83,7 @@ header h1 {
 }
 #sensors {
     padding: 0;
-    height: 200px;
+    text-align: center;
 }
 #reminders {
     padding: 0;

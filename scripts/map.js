@@ -10,7 +10,7 @@ function mapInit(){
 
 	requestAnimFrame( animate );
 	// create a texture from an image path
-	var texture = PIXI.Texture.fromImage("images/toaster-empty.png");
+	var texture = PIXI.Texture.fromImage("images/toaster-empty.png", false);
 	// create a new Sprite using the texture
 	var toaster = new PIXI.Sprite(texture);
 
@@ -22,8 +22,8 @@ function mapInit(){
 	toaster.position.x = 200;
 	toaster.position.y = 150;
 
-	var bed_T = PIXI.Texture.fromImage("images/bed.png");
-	var bedFocus_T  = PIXI.Texture.fromImage("images/bed-focus.png");
+	var bed_T = PIXI.Texture.fromImage("images/bed.png", false);
+	var bedFocus_T  = PIXI.Texture.fromImage("images/bed-focus.png", false);
 	var bed = new PIXI.Sprite(bed_T);
 	bed.interactive = true;
 	bed.anchor.y=1;
