@@ -32,6 +32,12 @@ function updateChart(chartObj){
 			if (ajaxReq.status==200) {
 				var data = JSON.parse(ajaxReq.responseText);
 				chartObj.chart.addData([data.value],chartObj.counter++);
+				if(chartObj.counter> 60){
+					chartObj.chart.removeData();
+				} 
+				if(chartObj.counter> 5555){
+					chartObj.counter = 61;
+				} 
 				console.log(data);
 				console.log(data.value);
 			}
@@ -81,7 +87,7 @@ function createCharts(sensors){
 
 		document.getElementById("sensors").appendChild(container);
 		var ctx = chart.getContext("2d");
-		var chartObj = new Chart(ctx).Line(startingData);
+		var chartObj = new Chart(ctx).Line(startingData, { pointDot: false, legendTemplate: " "  });
 
 		var item = {
 			name: sensors[i],
