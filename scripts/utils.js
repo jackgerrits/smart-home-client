@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	mapInit();
 	var feed = document.getElementById("feed");
 
-	reqServer();
-	reqSensors();
-	setInterval(updateCharts, 1000);
+	//reqServer();
+	//reqSensors();
+	//setInterval(updateCharts, 1000);
 });
 
 function reqSensors(){
@@ -14,15 +14,50 @@ function reqSensors(){
 	ajaxReq.onreadystatechange = function() {
 		if (ajaxReq.readyState==4) {
 			if (ajaxReq.status==200) {
-				var sensors = JSON.parse(ajaxReq.responseText).sensors;
+				var sensors = JSON.parse(ajaxReq.responseText).sensors[0];
 				console.log(sensors);
 				createCharts(sensors);
 			}
 		}
 	}
 	ajaxReq.open('GET',
-		'https://localhost:7777/data/sensors', true, "admin", "cheese");
+		'data/sensors', true, "admin", "cheese");
 	ajaxReq.send();
+}
+
+function showWindow(divID){
+    var window = document.getElementById( divID );
+    var overlay = document.getElementById( "overlay" );
+    overlay.style.display = 'block';
+    window.style.display = 'block';
+}
+
+function hideWindow(divID){
+    var window = document.getElementById( divID );
+    var overlay = document.getElementById( "overlay" );
+    overlay.style.display = 'none';
+    window.style.display = 'none';
+}
+
+function toggleSettings(divID, statusAnchor){
+    var advancedDiv = document.getElementById( divID );
+    var container = statusAnchor.parentElement;
+    var currentHeight;
+
+    // if its hidden we want to show it
+    if(advancedDiv.style.display == 'none'){
+        console.log("none branch");
+        statusAnchor.innerHTML = "Hide advanced settings &uarr;";
+        advancedDiv.style.display = 'block';
+        currentHeight = 400;
+    } else if (advancedDiv.style.display == 'block'){ //if its showing we want to hide it
+        console.log("block branch");
+        statusAnchor.innerHTML = "Show advanced settings &darr;";
+        advancedDiv.style.display = 'none';
+        currentHeight = 200;
+    }
+
+    container.style.height = currentHeight+'px';
 }
 
 function updateChart(chartObj){
@@ -44,7 +79,7 @@ function updateChart(chartObj){
 		}
 	}
 	ajaxReq.open('GET',
-		'https://localhost:7777/data/sensors/'+chartObj.name, true, "admin", "cheese");
+		'data/sensors/'+chartObj.name, true, "admin", "cheese");
 	ajaxReq.send();
 }
 
@@ -111,7 +146,7 @@ function reqServer() {
 		}
 	}
 	ajaxReq.open('GET',
-		'https://localhost:7777/data/feed', true, "admin", "cheese");
+		'data/feed', true, "admin", "cheese");
 	ajaxReq.send();
 	console.log("request sent");
 }

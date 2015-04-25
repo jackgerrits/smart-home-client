@@ -1,7 +1,12 @@
 @charset "utf-8";
+html {
+    height: 100%;
+}
+
 body {
 	margin: 0;
 	padding: 0;
+    height: 100%;
 	background-color: #E5E5E5;
 	font-family: 'Open Sans', sans-serif;
 }
@@ -18,6 +23,43 @@ header h1 {
     margin: 0px;
     font-weight: normal;
 }
+#overlay {
+    display: none;
+    z-index: 90;
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+    background-color: #F2F2F2;
+}
+
+.popupWindow {
+    display: none;
+    z-index: 99;
+
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
+    background-color: #FFF;
+    border: 1px solid grey;
+    padding: 10px;
+
+    width: 400px;
+    height: 200px;
+
+    overflow: auto;
+}
+
+.popupWindow h3 {
+    margin: 0 0 1em;
+}
+
+.popupWindow input {
+    width: 250px;
+}
+
 #feed {
     position: fixed;
     padding: 0px;
@@ -88,6 +130,10 @@ header h1 {
 #reminders {
     padding: 0;
     height: 400px;
+}
+
+a:hover {
+    font-weight: bold;
 }
 
 footer {

@@ -1,73 +1,115 @@
 <!DOCTYPE HTML>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Dashboard</title>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <link href="styles/style.css" rel="stylesheet" type="text/css">
-        <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-        <script src="scripts/pixi.js"></script>
-        <script src="scripts/utils.js"></script>
-        <script src="scripts/map.js"></script>
-        <script src="scripts/Chart.min.js"></script>
-        <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-        <link rel="import" href="elements/feed-item.html">
-    </head>
-    <body unresolved>
-        <div id="content">
-            <header>
-                <h1>
-                    DASHBOARD
-                </h1>
-                <nav>
-                    Jack's Home | Settings | Logout
-                </nav>
-            </header>
-            
-            <div class="module">
-                <div class="moduleTitle">
-                MAP<br />
-                <div class="moduleUtils">
-                    ↕<br />–</div>
-                </div>
-                <div id="map"></div>
-            </div>
-            <div class="module">
-                <div class="moduleTitle">
-                SENSOR DATA<br />
-                <div class="moduleUtils">
-                    ↕<br />–</div>
-                </div>
-                <div id="sensors"><!--use Chart.js for representing raw sensor data--></div>
-            </div>
-            <div class="module">
-                <div class="moduleTitle">
-                REMINDERS<br />
-                <div class="moduleUtils">
-                    ↕<br />–</div>
-                </div>
-                <div id="reminders">Add card style interface here</div>
-            </div>
-            <footer>
-            Created by Jack Gerrits
-            </footer>
-        </div>
-        <div id="feed">
-            <div id="feedTitle">
-                Activity Log
-            </div>
-            <div id="feedContent">
-                
-            </div>
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <script src="scripts/pixi.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/map.js"></script>
+    <script src="scripts/Chart.min.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="elements/feed-item.html">
+</head>
+<body unresolved>
 
-            <!--
-            <feed-item>
-                <h6>10:17 AM</h6>
-                Entered Bedroom
-            </feed-item>
-            -->
+<div id="overlay">
 
+</div>
+
+<div id="settingsWindow" class="popupWindow">
+    <h3>Settings</h3>
+    <table>
+        <tr>
+            <td>Server:</td>
+            <td><input type="text" placeholder="e.g. 192.168.0.10 or example.com" id="settings_server"></td>
+        </tr>
+        <tr>
+            <td>Username:</td>
+            <td><input type="text" id="settings_username"></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" id="settings_password"></td>
+        </tr>
+    </table>
+    <br />
+    <button onclick="hideWindow('settingsWindow')"> Close</button>
+    <a onclick="toggleSettings('settingsWindowAdvanced',this)">Show advanced settings ↓</a>
+    <br />
+    <br />
+
+    <div id="settingsWindowAdvanced" class="advancedSettings" style="display: none;">
+        <hr>
+        <p style="font-size: 0.8em;">Only change these settings if you know what you are doing.</p>
+        <table>
+            <tr>
+                <td>Tester:</td>
+                <td><input type="text" value="admin"> <br></td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<div id="content">
+    <header>
+        <h1>
+            DASHBOARD
+        </h1>
+        <nav>
+            <a onclick="showWindow('settingsWindow')">Settings</a> | Connect | Disconnect
+        </nav>
+    </header>
+
+    <div class="module">
+        <div class="moduleTitle">
+            MAP<br />
+            <div class="moduleUtils">
+                ↕<br />–</div>
         </div>
-    </body>
+        <div id="map"></div>
+    </div>
+    <div class="module">
+        <div class="moduleTitle">
+            SENSOR DATA<br />
+            <div class="moduleUtils">
+                ↕<br />–</div>
+        </div>
+        <div id="sensors"><!--use Chart.js for representing raw sensor data--></div>
+    </div>
+    <div class="module">
+        <div class="moduleTitle">
+            REMINDERS<br />
+            <div class="moduleUtils">
+                ↕<br />–</div>
+        </div>
+        <div id="reminders">Add card style interface here</div>
+    </div>
+    <footer>
+        Created by Jack Gerrits
+    </footer>
+</div>
+<div id="feed">
+    <div id="feedTitle">
+        Activity Log
+    </div>
+    <div id="feedContent">
+
+    </div>
+
+    <!--
+    <feed-item>
+        <h6>10:17 AM</h6>
+        Entered Bedroom
+    </feed-item>
+    -->
+
+</div>
+</body>
 </html>
