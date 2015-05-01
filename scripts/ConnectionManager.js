@@ -1,15 +1,22 @@
+var d = new Date();
+
 function ConnectionManager () {
     this.isConnected = false;
 
     this.connect = function(address, username, password) {
-        this.address = address;
-        this.username = username;
-        this.password = password;
-        this.isConnected = true;
-        this.makeAjaxRequest('data/feed',feedRequest);
-        this.makeAjaxRequest('data/sensors', handleSensors);
-        this.interval = setInterval(updateCharts, 1000);
+        if(!this.isConnected){
+            this.address = address;
+            this.username = username;
+            this.password = password;
+            this.isConnected = true;
+            this.makeAjaxRequest('data/feed',feedRequest);
+            this.makeAjaxRequest('data/sensors', handleSensors);
+            this.interval = setInterval(updateCharts, settings.chartInterval);
+        } else {
+            alert("ERROR: Already connected.");
+        }
     };
+
 
     this.disconnect = function(){
         if(this.isConnected){
@@ -21,18 +28,24 @@ function ConnectionManager () {
     };
 
     this.makeAjaxRequest = function(path, callback, callbackParameters){
-        var ajaxReq = new XMLHttpRequest();
-        ajaxReq.onreadystatechange = function() {
-            if (ajaxReq.readyState==4) {
-                if (callbackParameters !== undefined) {
-                    callback(ajaxReq, callbackParameters);
+        if(this.isConnected){
+            var ajaxReq = new XMLHttpRequest();
+            ajaxReq.onreadystatechange = function() {
+                if (ajaxReq.readyState==4) {
+                    if (callbackParameters !== undefined) {
+                        console.log("sending extra parameter");
+                        console.log(callbackParameters);
+                        callback(ajaxReq, callbackParameters);
+                    } else {
+                        callback(ajaxReq);
+                    }
+
                 }
-                callback(ajaxReq);
             }
+            ajaxReq.open('GET',
+                "https://"+this.address+"/"+path, true, this.username, this.password);
+            ajaxReq.send();
         }
-        ajaxReq.open('GET',
-            path, true, this.username, this.password);
-        ajaxReq.send();
     }
 }
 
@@ -78,17 +91,18 @@ function updateCharts() {
 function updateChart(ajaxReq, chartObj){
     if (ajaxReq.status==200) {
         var data = JSON.parse(ajaxReq.responseText);
-        chartObj.chart.addData([data.value],chartObj.counter++);
-        if(chartObj.counter> 60){
+        chartObj.chart.addData([data.value], chartObj.counter);
+        /*TODO
+        Make the label for the chart display current time
+         */
+        //chartObj.chart.addData([data.value], d.getHours()+":"+ d.getMinutes+":"+ d.getSeconds);
+        chartObj.counter++
+        while(chartObj.counter > 30){
+            console.log("removing point");
             chartObj.chart.removeData();
+            chartObj.counter--
         }
-        if(chartObj.counter> 5555){
-            chartObj.counter = 61;
-        }
-        console.log(data);
-        console.log(data.value);
     }
-
 }
 
 function createCharts(sensors){
@@ -124,7 +138,7 @@ function createCharts(sensors){
 
         document.getElementById("sensors").appendChild(container);
         var ctx = chart.getContext("2d");
-        var chartObj = new Chart(ctx).Line(startingData, { pointDot: false, legendTemplate: " "  });
+        var chartObj = new Chart(ctx).Line(startingData, { pointDot: false, legendTemplate: " ", bezierCurve : false  });
 
         var item = {
             name: sensors[i],

@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <script src="scripts/pixi.js"></script>
+    <script src="scripts/ConnectionManager.js"></script>
     <script src="scripts/utils.js"></script>
     <script src="scripts/map.js"></script>
     <script src="scripts/Chart.min.js"></script>
@@ -26,7 +27,11 @@
     <table>
         <tr>
             <td>Server:</td>
-            <td><input type="text" placeholder="e.g. 192.168.0.10 or example.com" id="settings_server"></td>
+            <td><input type="text" placeholder="e.g. 192.168.0.10 or example.com" id="settings_serverip"></td>
+        </tr>
+        <tr>
+            <td>Server Port:</td>
+            <td><input type="text" placeholder="e.g. 7891" id="settings_port"></td>
         </tr>
         <tr>
             <td>Username:</td>
@@ -38,9 +43,10 @@
         </tr>
     </table>
     <br />
-    <button onclick="hideWindow('settingsWindow')"> Close</button>
+    <button onclick="closeSettingsWindow()"> Close</button>
     <a onclick="toggleSettings('settingsWindowAdvanced',this)">Show advanced settings ↓</a>
     <br />
+    <div id="settings_error"></div>
     <br />
 
     <div id="settingsWindowAdvanced" class="advancedSettings" style="display: none;">
@@ -48,9 +54,14 @@
         <p style="font-size: 0.8em;">Only change these settings if you know what you are doing.</p>
         <table>
             <tr>
-                <td>Tester:</td>
-                <td><input type="text" value="admin"> <br></td>
+                <td>Use bedroom map:</td>
+                <td><input type="checkbox" id="settings_showMap"> <br></td>
             </tr>
+            <tr>
+                <td>Chart update interval:</td>
+                <td><input type="text" id="settings_chartInterval" placeholder="# seconds" value="5"> <br></td>
+            </tr>
+
         </table>
 
     </div>
@@ -63,7 +74,7 @@
             DASHBOARD
         </h1>
         <nav>
-            <a onclick="showWindow('settingsWindow')">Settings</a> | Connect | Disconnect
+            <a onclick="showSettingsWindow()">Settings</a> | <a onclick="connectButtonClicked()">Connect</a> | <a onclick="disconnectButtonClicked()">Disconnect</a>
         </nav>
     </header>
 
