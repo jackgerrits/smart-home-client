@@ -9,6 +9,10 @@ function ConnectionManager () {
             this.username = username;
             this.password = password;
             this.isConnected = true;
+            this.authInfo = {
+                "username": username,
+                "password": password
+            };
             this.makeAjaxRequest('data/feed',feedRequest);
             this.makeAjaxRequest('data/sensors', handleSensors);
             this.interval = setInterval(updateCharts, settings.chartInterval);
@@ -16,6 +20,7 @@ function ConnectionManager () {
             alert("ERROR: Already connected.");
         }
     };
+
 
 
     this.disconnect = function(){
@@ -41,10 +46,11 @@ function ConnectionManager () {
                     }
 
                 }
-            }
-            ajaxReq.open('GET',
-                "https://"+this.address+"/"+path, true, this.username, this.password);
-            ajaxReq.send();
+            };
+            ajaxReq.open('POST',
+                "https://"+this.address+"/"+path, true);
+            ajaxReq.setRequestHeader('Content-Type', 'application/json');
+            ajaxReq.send(JSON.stringify(this.authInfo));
         }
     }
 }

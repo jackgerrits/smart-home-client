@@ -69,8 +69,8 @@ function validateSettings(){
         appendSettingsError("Invalid password.");
         hasPassed = false;
     }
-    if(settings.chartInterval <= 0){
-        appendSettingsError("Invalid chart interval");
+    if(settings.chartInterval <= 0 || isNaN(settings.chartInterval)){
+        appendSettingsError("Invalid chart interval.");
         hasPassed = false;
     }
 
