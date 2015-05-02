@@ -66,15 +66,21 @@ function feedRequest(ajaxReq){
     }
 }
 
-function appendToFeed(content){
+function appendToFeed(body){
     var feed = document.getElementById("feedContent");
 
-    var item = document.createElement('feed-item');
-    var timeSpan = document.createElement('h6');
-    timeSpan.innerHTML = content.time;
+    var item = document.createElement('div');
+    item.className = "feedItem";
 
-    item.appendChild(timeSpan);
-    item.innerHTML += content.contents;
+    var time = document.createElement('h6');
+    time.innerHTML = body.time;
+    time.className = "feedItem_time";
+    item.appendChild(time);
+
+    var content = document.createElement('p');
+    content.innerHTML = body.contents;
+    content.className = "feedItem_content";
+    item.appendChild(content)
 
     feed.insertBefore(item, feed.childNodes[0]);
 }
@@ -97,7 +103,7 @@ function updateCharts() {
 function updateChart(ajaxReq, chartObj){
     if (ajaxReq.status==200) {
         var data = JSON.parse(ajaxReq.responseText);
-        chartObj.chart.addData([data.value], chartObj.counter);
+        chartObj.chart.addData([data.value], "");
         /*TODO
         Make the label for the chart display current time
          */
@@ -128,14 +134,14 @@ function createCharts(sensors){
         chart.id = sensors[i];
 
         startingData = {
-            labels: [0],
+            labels: [""],
             datasets: [
                 {
                     fillColor: "rgba(220,220,220,0.2)",
                     strokeColor: "rgba(220,220,220,1)",
                     pointColor: "rgba(220,220,220,1)",
                     pointStrokeColor: "#fff",
-                    data: [1]
+                    data: []
                 }]
         }
 

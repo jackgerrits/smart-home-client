@@ -2,10 +2,8 @@ var charts = new Array();
 var connectionManager = new ConnectionManager();
 var settings = null;
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-	mapInit();
+document.addEventListener("DOMContentLoaded", function(event) {
 	var feed = document.getElementById("feed");
-
 });
 
 function showWindow(divID){
@@ -39,11 +37,23 @@ function closeSettingsWindow(){
     settings.showMap = document.getElementById("settings_showMap").checked;
     settings.chartInterval = parseInt(document.getElementById("settings_chartInterval").value)*1000;
 
+
+
      if(validateSettings()){
         if(firstTime){
             alert("The SSL certificate must now be accepted");
             window.open("https://"+settings.server+":"+settings.port+"/data/sensors");
         }
+
+         var mapModule = document.getElementById("module_map");
+         if(settings.showMap && document.getElementById("map").innerHTML == ""){
+             mapInit();
+         }
+         if(settings.showMap){
+             mapModule.style.display = 'block';
+         } else {
+             mapModule.style.display = 'none';
+         }
 
         clearSettingsError();
         hideWindow('settingsWindow');

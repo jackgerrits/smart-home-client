@@ -13,8 +13,6 @@
     <script src="scripts/utils.js"></script>
     <script src="scripts/map.js"></script>
     <script src="scripts/Chart.min.js"></script>
-    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-    <link rel="import" href="elements/feed-item.html">
 </head>
 <body unresolved>
 
@@ -80,12 +78,27 @@
 
     <div class="module">
         <div class="moduleTitle">
+            INFO<br />
+            <div class="moduleUtils">
+                ↕<br />–</div>
+        </div>
+        <div id="info">
+            Connection state:
+            Chart updates:
+            Events received:
+
+        </div>
+    </div>
+
+    <div class="module" id="module_map" style="display: none;">
+        <div class="moduleTitle">
             MAP<br />
             <div class="moduleUtils">
                 ↕<br />–</div>
         </div>
         <div id="map"></div>
     </div>
+
     <div class="module">
         <div class="moduleTitle">
             SENSOR DATA<br />
@@ -94,19 +107,25 @@
         </div>
         <div id="sensors"><!--use Chart.js for representing raw sensor data--></div>
     </div>
+
+    <!--
     <div class="module">
         <div class="moduleTitle">
             REMINDERS<br />
             <div class="moduleUtils">
                 ↕<br />–</div>
         </div>
-        <div id="reminders">Add card style interface here</div>
+        <div id="reminders"></div>
     </div>
+    -->
+
     <footer>
         Created by Jack Gerrits
     </footer>
 </div>
+
 <div id="feed">
+
     <div id="feedTitle">
         Activity Log
     </div>
@@ -114,13 +133,7 @@
 
     </div>
 
-    <!--
-    <feed-item>
-        <h6>10:17 AM</h6>
-        Entered Bedroom
-    </feed-item>
-    -->
-
 </div>
+
 </body>
 </html>
