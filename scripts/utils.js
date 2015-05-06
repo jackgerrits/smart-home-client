@@ -15,7 +15,21 @@ function showWindow(divID){
 
 function showSettingsWindow(){
     showWindow('settingsWindow');
+}
 
+function updateConnectionState(){
+    var infoDiv = document.getElementById( "info_connection" );
+    infoDiv.innerHTML = connectionManager.isConnected;
+}
+
+function updateChartCounter(){
+    var infoDiv = document.getElementById( "info_updates" );
+    infoDiv.innerHTML = connectionManager.chartUpdates;
+}
+
+function updateEventsCounter(){
+    var infoDiv = document.getElementById( "info_events" );
+    infoDiv.innerHTML = connectionManager.events;
 }
 
 function closeSettingsWindow(){
@@ -41,8 +55,8 @@ function closeSettingsWindow(){
 
      if(validateSettings()){
         if(firstTime){
-            alert("The SSL certificate must now be accepted");
-            window.open("https://"+settings.server+":"+settings.port+"/data/sensors");
+            //alert("The SSL certificate must now be accepted");
+            //window.open("https://"+settings.server+":"+settings.port+"/data/sensors");
         }
 
          var mapModule = document.getElementById("module_map");

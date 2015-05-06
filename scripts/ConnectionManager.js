@@ -5,6 +5,8 @@ function ConnectionManager () {
 
     this.connect = function(address, username, password) {
         if(!this.isConnected){
+            this.chartUpdates = 0;
+            this.events = 0;
             this.address = address;
             this.username = username;
             this.password = password;
@@ -16,6 +18,7 @@ function ConnectionManager () {
             this.makeAjaxRequest('data/feed',feedRequest);
             this.makeAjaxRequest('data/sensors', handleSensors);
             this.interval = setInterval(updateCharts, settings.chartInterval);
+            updateConnectionState();
         } else {
             alert("ERROR: Already connected.");
         }
@@ -26,7 +29,10 @@ function ConnectionManager () {
     this.disconnect = function(){
         if(this.isConnected){
             this.isConnected = false;
+            this.events = 0;
+            this.chartUpdates = 0;
             clearInterval(this.interval);
+            updateConnectionState();
         } else {
             alert("ERROR: Cannot disconnect, no connection active.")
         }
@@ -37,27 +43,44 @@ function ConnectionManager () {
             var ajaxReq = new XMLHttpRequest();
             ajaxReq.onreadystatechange = function() {
                 if (ajaxReq.readyState==4) {
-                    if (callbackParameters !== undefined) {
-                        console.log("sending extra parameter");
-                        console.log(callbackParameters);
+                    if(ajaxReq.status == 401){
+                        alert("incorrect username or password");
+                        if(connectionManager.isConnected){
+                            connectionManager.disconnect();
+                        }
+                        
+                    } else {
+                        if (callbackParameters !== undefined) {
+                        //console.log("sending extra parameter");
+                        //console.log(callbackParameters);
                         callback(ajaxReq, callbackParameters);
                     } else {
                         callback(ajaxReq);
                     }
-
                 }
-            };
-            ajaxReq.open('POST',
-                "https://"+this.address+"/"+path, true);
-            ajaxReq.setRequestHeader('Content-Type', 'application/json');
-            ajaxReq.send(JSON.stringify(this.authInfo));
+
+
+            }
+        };
+
+        ajaxReq.onerror = function(err) {
+            console.log(err);
+            console.log("lost connection");
+            connectionManager.disconnect();
         }
+        ajaxReq.open('POST',
+            "https://"+this.address+"/"+path, true);
+        ajaxReq.setRequestHeader('Content-Type', 'application/json');
+        ajaxReq.send(JSON.stringify(this.authInfo));
     }
+}
 }
 
 function feedRequest(ajaxReq){
     if (ajaxReq.status==200) {
         appendToFeed(JSON.parse(ajaxReq.responseText));
+        connectionManager.events++;
+        updateEventsCounter();
     }
     if (ajaxReq.status > 0) {
         if(connectionManager.isConnected){
@@ -98,6 +121,8 @@ function updateCharts() {
         var path = 'data/sensors/'+charts[i].name;
         connectionManager.makeAjaxRequest(path, updateChart, charts[i]);
     }
+    connectionManager.chartUpdates++;
+    updateChartCounter();
 }
 
 function updateChart(ajaxReq, chartObj){
