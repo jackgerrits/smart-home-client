@@ -4,6 +4,7 @@ var settings = null;
 
 document.addEventListener("DOMContentLoaded", function(event) {
 	var feed = document.getElementById("feed");
+    updateConnectionState();
 });
 
 function showWindow(divID){
@@ -19,7 +20,11 @@ function showSettingsWindow(){
 
 function updateConnectionState(){
     var infoDiv = document.getElementById( "info_connection" );
-    infoDiv.innerHTML = connectionManager.isConnected;
+    if(connectionManager.isConnected){
+        infoDiv.innerHTML = "<span class='true'>Connected</span>"
+    } else {
+        infoDiv.innerHTML = "<span class='false'>Disconnected</span>"
+    }
 }
 
 function updateChartCounter(){
@@ -32,42 +37,66 @@ function updateEventsCounter(){
     infoDiv.innerHTML = connectionManager.events;
 }
 
-function closeSettingsWindow(){
+function updateHumanStatus(occupied){
+    var infoDiv = document.getElementById( "info_occupied" );
+    if(occupied){
+        infoDiv.innerHTML = "<span class='true'>Occupied</span>"
+    } else {
+        infoDiv.innerHTML = "<span class='false'>Unoccupied</span>"
+    }
+}
+
+function closeSettingsWindow(save){
     clearSettingsError();
 
-    var firstTime = false;
     if(settings == null){
         settings = {};
-        firstTime = true;
+        settings.server = "";
+        settings.port =  "";
+        settings.username = "";
+        settings.password = "";
+        settings.showMap = false;
+        settings.chartInterval = 5;
+        settings.enterName = "enter";
+        settings.leaveName = "leave";
     }
 
-    //basic settings
-    settings.server = document.getElementById("settings_serverip").value;
-    settings.port = processPort(document.getElementById("settings_port").value);
-    settings.username = document.getElementById("settings_username").value;
-    settings.password = document.getElementById("settings_password").value;
+    if(save){
+        //basic settings
+        settings.server = document.getElementById("settings_serverip").value;
+        settings.port = processPort(document.getElementById("settings_port").value);
+        settings.username = document.getElementById("settings_username").value;
+        settings.password = document.getElementById("settings_password").value;
 
-    //advanced settings
-    settings.showMap = document.getElementById("settings_showMap").checked;
-    settings.chartInterval = parseInt(document.getElementById("settings_chartInterval").value)*1000;
+        //advanced settings
+        settings.showMap = document.getElementById("settings_showMap").checked;
+        settings.chartInterval = parseInt(document.getElementById("settings_chartInterval").value)*1000;
+        settings.enterName =  document.getElementById("settings_enter").value;
+        settings.leaveName =  document.getElementById("settings_leave").value;
 
+        if(validateSettings()){
+            var mapModule = document.getElementById("module_map");
+            if(settings.showMap && document.getElementById("map").innerHTML == ""){
+                mapInit();
+            }
+            if(settings.showMap){
+                mapModule.style.display = 'block';
+            } else {
+                mapModule.style.display = 'none';
+            }
 
-
-     if(validateSettings()){
-        if(firstTime){
-            //alert("The SSL certificate must now be accepted");
-            //window.open("https://"+settings.server+":"+settings.port+"/data/sensors");
+            clearSettingsError();
+            hideWindow('settingsWindow');
         }
-
-         var mapModule = document.getElementById("module_map");
-         if(settings.showMap && document.getElementById("map").innerHTML == ""){
-             mapInit();
-         }
-         if(settings.showMap){
-             mapModule.style.display = 'block';
-         } else {
-             mapModule.style.display = 'none';
-         }
+    } else {
+        document.getElementById("settings_serverip").value = settings.server;
+        document.getElementById("settings_port").value = settings.port;
+        document.getElementById("settings_username").value = settings.username;
+        document.getElementById("settings_password").value = settings.password;
+        document.getElementById("settings_showMap").checked = settings.showMap;
+        document.getElementById("settings_chartInterval").value = settings.chartInterval;
+         document.getElementById("settings_enter").value = settings.enterName;
+        document.getElementById("settings_leave").value = settings.leaveName;
 
         clearSettingsError();
         hideWindow('settingsWindow');
@@ -97,6 +126,14 @@ function validateSettings(){
         appendSettingsError("Invalid chart interval.");
         hasPassed = false;
     }
+    if(settings.enterName == ""){
+        appendSettingsError("Invalid enter event name.");
+        hasPassed = false;
+    }
+    if(settings.leaveName == ""){
+        appendSettingsError("Invalid leave event name.");
+        hasPassed = false;
+    }
 
     return hasPassed;
 }
@@ -120,12 +157,12 @@ function clearSettingsError(){
 }
 
 function connectButtonClicked(){
-    if(settings==null){
+    clearInterface();
+    if(settings==null || settings.server==""){
         alert("ERROR: Please change settings first");
     } else {
         connectionManager.connect(settings.server+":"+settings.port, settings.username, settings.password);
     }
-
 }
 
 function disconnectButtonClicked(){
@@ -149,7 +186,7 @@ function toggleSettings(divID, statusAnchor){
         console.log("none branch");
         statusAnchor.innerHTML = "Hide advanced settings &uarr;";
         advancedDiv.style.display = 'block';
-        currentHeight = 400;
+        currentHeight = 500;
     } else if (advancedDiv.style.display == 'block'){ //if its showing we want to hide it
         console.log("block branch");
         statusAnchor.innerHTML = "Show advanced settings &darr;";

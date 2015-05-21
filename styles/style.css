@@ -109,7 +109,7 @@ header h1 {
 .module {
     width: 600px;
     padding: 5px;
-    min-height: 300px;
+    min-height: 100px;
     margin-top: 10px;
     background-color: #FFF;
     box-shadow: 3px 3px 5px #999;
@@ -164,4 +164,9 @@ footer {
     padding: 10px;
     font-size: 0.7em;
 }
-
+.true {
+    color: green;
+}
+.false {
+    color: red;
+}

@@ -41,7 +41,7 @@
         </tr>
     </table>
     <br />
-    <button onclick="closeSettingsWindow()"> Close</button>
+    <button onclick="closeSettingsWindow(true)">Save</button>  <button onclick="closeSettingsWindow(false)">Close</button>
     <a onclick="toggleSettings('settingsWindowAdvanced',this)">Show advanced settings ↓</a>
     <br />
     <div id="settings_error"></div>
@@ -53,11 +53,19 @@
         <table>
             <tr>
                 <td>Use bedroom map:</td>
-                <td><input type="checkbox" id="settings_showMap"> <br></td>
+                <td><input type="checkbox" id="settings_showMap"> <small>Note: work in progress</small><br></td>
             </tr>
             <tr>
                 <td>Chart update interval:</td>
                 <td><input type="text" id="settings_chartInterval" placeholder="# seconds" value="5"> <br></td>
+            </tr>
+            <tr>
+                <td>Room entered event name:</td>
+                <td><input type="text" id="settings_enter" value="enter"> <br></td>
+            </tr>
+            <tr>
+                <td>Room left event name:</td>
+                <td><input type="text" id="settings_leave" value="leave"> <br></td>
             </tr>
 
         </table>
@@ -85,8 +93,8 @@
         <div id="info">
             Connection state: <span id="info_connection"></span><br>
             Chart updates:  <span id="info_updates"></span><br>
-            Events received: <span id="info_events"></span> <br> 
-
+            Events received: <span id="info_events"></span> <br>
+            Room occupied: <span id="info_occupied"></span><br>
         </div>
     </div>
 

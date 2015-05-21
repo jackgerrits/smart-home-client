@@ -33,8 +33,6 @@ function ConnectionManager () {
             this.chartUpdates = 0;
             clearInterval(this.interval);
             updateConnectionState();
-        } else {
-            alert("ERROR: Cannot disconnect, no connection active.")
         }
     };
 
@@ -65,7 +63,7 @@ function ConnectionManager () {
 
         ajaxReq.onerror = function(err) {
             console.log(err);
-            console.log("lost connection");
+            console.log("Connection error");
             connectionManager.disconnect();
         }
         ajaxReq.open('POST',
@@ -90,6 +88,12 @@ function feedRequest(ajaxReq){
 }
 
 function appendToFeed(body){
+    if(body.name==settings.enterName){
+        updateHumanStatus(true);
+    } else if (body.name==settings.leaveName) {
+        updateHumanStatus(false);
+    }
+
     var feed = document.getElementById("feedContent");
 
     var item = document.createElement('div');
