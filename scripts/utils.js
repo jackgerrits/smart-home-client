@@ -55,7 +55,7 @@ function closeSettingsWindow(save){
         settings.port =  "";
         settings.username = "";
         settings.password = "";
-        settings.showMap = false;
+        //settings.showMap = false;
         settings.chartInterval = 5;
         settings.enterName = "enter";
         settings.leaveName = "leave";
@@ -69,21 +69,21 @@ function closeSettingsWindow(save){
         settings.password = document.getElementById("settings_password").value;
 
         //advanced settings
-        settings.showMap = document.getElementById("settings_showMap").checked;
+        //settings.showMap = document.getElementById("settings_showMap").checked;
         settings.chartInterval = parseInt(document.getElementById("settings_chartInterval").value)*1000;
         settings.enterName =  document.getElementById("settings_enter").value;
         settings.leaveName =  document.getElementById("settings_leave").value;
 
         if(validateSettings()){
-            var mapModule = document.getElementById("module_map");
-            if(settings.showMap && document.getElementById("map").innerHTML == ""){
-                mapInit();
-            }
-            if(settings.showMap){
-                mapModule.style.display = 'block';
-            } else {
-                mapModule.style.display = 'none';
-            }
+            //var mapModule = document.getElementById("module_map");
+            //if(settings.showMap && document.getElementById("map").innerHTML == ""){
+            //    mapInit();
+            //}
+            //if(settings.showMap){
+            //    mapModule.style.display = 'block';
+            //} else {
+            //    mapModule.style.display = 'none';
+            //}
 
             clearSettingsError();
             hideWindow('settingsWindow');
@@ -93,7 +93,7 @@ function closeSettingsWindow(save){
         document.getElementById("settings_port").value = settings.port;
         document.getElementById("settings_username").value = settings.username;
         document.getElementById("settings_password").value = settings.password;
-        document.getElementById("settings_showMap").checked = settings.showMap;
+        //document.getElementById("settings_showMap").checked = settings.showMap;
         document.getElementById("settings_chartInterval").value = settings.chartInterval;
          document.getElementById("settings_enter").value = settings.enterName;
         document.getElementById("settings_leave").value = settings.leaveName;
@@ -176,6 +176,11 @@ function hideWindow(divID){
     window.style.display = 'none';
 }
 
+function appendToLog(content){
+    var logDiv = document.getElementById("log");
+    logDiv.innerHTML = logDiv.innerHTML + content + "<br />";
+}
+
 function toggleSettings(divID, statusAnchor){
     var advancedDiv = document.getElementById( divID );
     var container = statusAnchor.parentElement;
@@ -197,8 +202,16 @@ function toggleSettings(divID, statusAnchor){
     container.style.height = currentHeight+'px';
 }
 
+function clearButtonClicked(){
+    var r = confirm("Are you sure you want clear all data from the interface?");
+    if (r == true) {
+        clearInterface();
+    }
+}
+
 function clearInterface(){
     document.getElementById("sensors").innerHTML = "";
+    document.getElementById("log").innerHTML = "";
     document.getElementById("feedContent").innerHTML = "";
     charts = new Array();
 }

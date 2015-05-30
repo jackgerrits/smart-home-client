@@ -63,6 +63,7 @@ function ConnectionManager () {
 
         ajaxReq.onerror = function(err) {
             console.log(err);
+            appendToLog("Connection error");
             console.log("Connection error");
             connectionManager.disconnect();
         }

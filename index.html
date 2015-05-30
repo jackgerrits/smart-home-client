@@ -51,10 +51,10 @@
         <hr>
         <p style="font-size: 0.8em;">Only change these settings if you know what you are doing.</p>
         <table>
-            <tr>
-                <td>Use bedroom map:</td>
-                <td><input type="checkbox" id="settings_showMap"> <small>Note: work in progress</small><br></td>
-            </tr>
+            <!--<tr>-->
+                <!--<td>Use bedroom map:</td>-->
+                <!--<td><input type="checkbox" id="settings_showMap"> <small>Note: work in progress</small><br></td>-->
+            <!--</tr>-->
             <tr>
                 <td>Chart update interval:</td>
                 <td><input type="text" id="settings_chartInterval" placeholder="# seconds" value="5"> <br></td>
@@ -66,6 +66,10 @@
             <tr>
                 <td>Room left event name:</td>
                 <td><input type="text" id="settings_leave" value="leave"> <br></td>
+            </tr>
+            <tr>
+                <td>Clear Interface:</td>
+                <td><button onclick="clearButtonClicked()">Clear</button></td>
             </tr>
 
         </table>
@@ -87,31 +91,20 @@
     <div class="module">
         <div class="moduleTitle">
             INFO<br />
-            <div class="moduleUtils">
-                ↕<br />–</div>
         </div>
         <div id="info">
             Connection state: <span id="info_connection"></span><br>
             Chart updates:  <span id="info_updates"></span><br>
             Events received: <span id="info_events"></span> <br>
             Room occupied: <span id="info_occupied"></span><br>
+            Log: <br>
+            <div id="log"></div>
         </div>
-    </div>
-
-    <div class="module" id="module_map" style="display: none;">
-        <div class="moduleTitle">
-            MAP<br />
-            <div class="moduleUtils">
-                ↕<br />–</div>
-        </div>
-        <div id="map"></div>
     </div>
 
     <div class="module">
         <div class="moduleTitle">
             SENSOR DATA<br />
-            <div class="moduleUtils">
-                ↕<br />–</div>
         </div>
         <div id="sensors"><!--use Chart.js for representing raw sensor data--></div>
     </div>
