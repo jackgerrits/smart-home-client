@@ -213,5 +213,8 @@ function clearInterface(){
     document.getElementById("sensors").innerHTML = "";
     document.getElementById("log").innerHTML = "";
     document.getElementById("feedContent").innerHTML = "";
+    document.getElementById("info_updates").innerHTML = "";
+    document.getElementById("info_events").innerHTML = "";
+    document.getElementById("info_occupied").innerHTML = "";
     charts = new Array();
 }
