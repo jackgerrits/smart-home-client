@@ -157,7 +157,6 @@ function clearSettingsError(){
 }
 
 function connectButtonClicked(){
-    clearInterface();
     if(settings==null || settings.server==""){
         alert("ERROR: Please change settings first");
     } else {
@@ -206,6 +205,13 @@ function clearButtonClicked(){
     var r = confirm("Are you sure you want clear all data from the interface?");
     if (r == true) {
         clearInterface();
+    }
+}
+
+function clearFeed(){
+    var r = confirm("Are you sure you want clear the feed?");
+    if (r == true) {
+        document.getElementById("feedContent").innerHTML = "";
     }
 }
 

@@ -8,10 +8,8 @@
     <link href="styles/style.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-    <script src="scripts/pixi.js"></script>
     <script src="scripts/ConnectionManager.js"></script>
     <script src="scripts/utils.js"></script>
-    <script src="scripts/map.js"></script>
     <script src="scripts/Chart.min.js"></script>
 </head>
 <body unresolved>
@@ -97,6 +95,7 @@
             Chart updates:  <span id="info_updates"></span><br>
             Events received: <span id="info_events"></span> <br>
             Room occupied: <span id="info_occupied"></span><br>
+            <button onclick="clearFeed()">Clear Feed</button> <br>
             Log: <br>
             <div id="log"></div>
         </div>

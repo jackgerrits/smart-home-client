@@ -15,6 +15,7 @@ function ConnectionManager () {
                 "username": username,
                 "password": password
             };
+            clearInterface();
             this.makeAjaxRequest('data/feed',feedRequest);
             this.makeAjaxRequest('data/sensors', handleSensors);
             this.interval = setInterval(updateCharts, settings.chartInterval);
